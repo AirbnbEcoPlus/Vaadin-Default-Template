@@ -14,8 +14,8 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import fr.endide.application.data.entity.Student;
-import fr.endide.application.data.service.StudentRepository;
+import fr.endide.application.data.entity.User;
+import fr.endide.application.data.service.UserRepository;
 import fr.endide.application.views.MainLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -36,7 +36,7 @@ public class MonCompteView extends Div {
     private PasswordField repassword = new PasswordField("Retaper le Mot de Passe");
     private Button save = new Button("Save");
 
-    StudentRepository service;
+    UserRepository service;
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String currentPrincipalName = authentication.getName();
 
@@ -46,26 +46,26 @@ public class MonCompteView extends Div {
         return new H3("Mon compte : " + currentPrincipalName);
     }
     @Autowired
-    public MonCompteView(StudentRepository service){
+    public MonCompteView(UserRepository service){
         addClassName("mon-compte-view");
         this.service = service;
-        Student student = service.findByEmail(currentPrincipalName);
-        firstName.setValue(student.getFirstName());
-        lastName.setValue(student.getLastName());
+        User user = service.findByEmail(currentPrincipalName);
+        firstName.setValue(user.getFirstName());
+        lastName.setValue(user.getLastName());
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addClassName("button-layout");
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         save.addClickListener(event -> {
             if(!password.isEmpty() || !repassword.isEmpty()) {
                 if(password.getValue().equals(repassword.getValue())) {
-                    student.setHashedPassword(new BCryptPasswordEncoder().encode(password.getValue()));
+                    user.setHashedPassword(new BCryptPasswordEncoder().encode(password.getValue()));
                 } else {
                     Notification.show("Les mots de passe ne correspondent pas");
                 }
             }
-            student.setFirstName(firstName.getValue());
-            student.setLastName(lastName.getValue());
-            service.save(student);
+            user.setFirstName(firstName.getValue());
+            user.setLastName(lastName.getValue());
+            service.save(user);
             Notification.show("Saved");
         });
 

@@ -1,6 +1,6 @@
 package fr.endide.application.security;
 
-import fr.endide.application.data.entity.Student;
+import fr.endide.application.data.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -8,28 +8,28 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class StudentUserDetails implements UserDetails {
+public class UsersDetails implements UserDetails {
 
-    private Student student;
+    private User user;
 
-    public StudentUserDetails(Student student) {
-        this.student = student;
+    public UsersDetails(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + student.getRoles());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + user.getRoles());
         return Arrays.asList(authority);
     }
 
     @Override
     public String getPassword() {
-        return student.getHashedPassword();
+        return user.getHashedPassword();
     }
 
     @Override
     public String getUsername() {
-        return student.getEmail();
+        return user.getEmail();
     }
 
     @Override

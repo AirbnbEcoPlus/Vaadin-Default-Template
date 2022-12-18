@@ -1,27 +1,26 @@
 package fr.endide.application.security;
 
-import fr.endide.application.data.entity.Student;
-import fr.endide.application.data.service.StudentRepository;
+import fr.endide.application.data.entity.User;
+import fr.endide.application.data.service.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    StudentRepository repository;
+    UserRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(String email)
+    public UsersDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
-        Student student = repository.findByEmail(email);
+        User user = repository.findByUsername(username);
 
-        if (student == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("Could not find user");
         }
 
-        return new StudentUserDetails(student);
+        return new UsersDetails(user);
     }
 
 }

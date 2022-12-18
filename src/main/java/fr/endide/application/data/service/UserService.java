@@ -3,33 +3,33 @@ package fr.endide.application.data.service;
 import java.util.Optional;
 import java.util.UUID;
 
-import fr.endide.application.data.entity.Student;
+import fr.endide.application.data.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StudentService {
+public class UserService {
 
-    private final StudentRepository repository;
+    private final UserRepository repository;
 
     @Autowired
-    public StudentService(StudentRepository repository) {
+    public UserService(UserRepository repository) {
         this.repository = repository;
     }
 
-    public Optional<Student> get(UUID id) {
+    public Optional<User> get(UUID id) {
         return repository.findById(id);
     }
-    public Student getByEmail(String email) {
+    public User getByEmail(String email) {
         return repository.findByEmail(email);
     }
     public boolean exists(String email) {
         return repository.existsStudentByEmail(email);
     }
 
-    public Student update(Student entity) {
+    public User update(User entity) {
         return repository.save(entity);
     }
 
@@ -37,7 +37,7 @@ public class StudentService {
         repository.deleteById(id);
     }
 
-    public Page<Student> list(Pageable pageable) {
+    public Page<User> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 

@@ -19,8 +19,8 @@ import org.springframework.context.annotation.Bean;
  *
  */
 @SpringBootApplication(exclude = ErrorMvcAutoConfiguration.class)
-@Theme(value = "schoolcompanion")
-@PWA(name = "SchoolCompanion", shortName = "SchoolCompanion", offlineResources = {})
+@Theme(value = "apps")
+@PWA(name = "Application", shortName = "apps", offlineResources = {})
 @Push
 @NpmPackage(value = "line-awesome", version = "1.3.0")
 public class Application implements AppShellConfigurator {
@@ -28,14 +28,4 @@ public class Application implements AppShellConfigurator {
         SpringApplication.run(Application.class, args);
 
     }
-    @Bean
-    public CollaborationEngineConfiguration ceConfigBean() {
-    CollaborationEngineConfiguration configuration = new CollaborationEngineConfiguration(
-            licenseEvent -> {
-                // See <<ce.production.license-events>>
-            });
-    configuration.setDataDir("vaadin/");
-    return configuration;
-}
-
 }

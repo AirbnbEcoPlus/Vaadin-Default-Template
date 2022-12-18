@@ -8,14 +8,13 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "students")
-public class Student extends AbstractEntity {
+@Table(name = "users")
+public class User extends AbstractEntity {
 
     private String username;
     private String firstName;
     private String lastName;
     private String email;
-    private String schoolLevel;
     @JsonIgnore
     private String hashedPassword;
     private String role;
@@ -46,12 +45,6 @@ public class Student extends AbstractEntity {
     }
     public void setEmail(String email) {
         this.email = email;
-    }
-    public String getSchoolLevel() {
-        return schoolLevel;
-    }
-    public void setSchoolLevel(String schoolLevel) {
-        this.schoolLevel = schoolLevel;
     }
     public String getHashedPassword() {
         return hashedPassword;

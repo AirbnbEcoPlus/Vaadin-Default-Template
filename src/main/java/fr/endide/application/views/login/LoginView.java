@@ -7,12 +7,12 @@ import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import fr.endide.application.data.service.StudentRepository;
+import fr.endide.application.data.service.UserRepository;
 
 @PageTitle("Login")
 @Route(value = "login")
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
-    StudentRepository repository;
+    UserRepository repository;
     private final LoginForm login = new LoginForm();
 
     public LoginView(){

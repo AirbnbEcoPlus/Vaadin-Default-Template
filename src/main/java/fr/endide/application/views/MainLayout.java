@@ -21,12 +21,9 @@ import com.vaadin.flow.dom.ThemeList;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.theme.lumo.Lumo;
-import fr.endide.application.data.entity.Student;
-import fr.endide.application.data.service.StudentService;
+import fr.endide.application.data.entity.User;
+import fr.endide.application.data.service.UserService;
 import fr.endide.application.security.SecurityService;
-import fr.endide.application.views.avis.AvisView;
-import fr.endide.application.views.conseildeclasse.ConseilDeClasseView;
-import fr.endide.application.views.eleves.ElevesView;
 import fr.endide.application.views.moncompte.MonCompteView;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -80,10 +77,10 @@ public class MainLayout extends AppLayout {
     }
 
     private AccessAnnotationChecker accessChecker;
-    StudentService service;
+    UserService service;
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     String currentPrincipalName = authentication.getName();
-    public MainLayout(AccessAnnotationChecker accessChecker, StudentService service) {
+    public MainLayout(AccessAnnotationChecker accessChecker, UserService service) {
         this.service = service;
         this.accessChecker = accessChecker;
 
@@ -101,9 +98,9 @@ public class MainLayout extends AppLayout {
         H1 appName = new H1("SchoolCompanion");
         appName.addClassNames("my-m", "me-auto", "text-l");
         layout.add(appName);
-        Student student = service.getByEmail(currentPrincipalName);
+        User user = service.getByEmail(currentPrincipalName);
 
-            Avatar avatar = new Avatar(student.getFirstName() + " " + student.getLastName());
+            Avatar avatar = new Avatar(user.getFirstName() + " " + user.getLastName());
             avatar.setThemeName("xsmall");
             avatar.getElement().setAttribute("tabindex", "-1");
 
@@ -112,7 +109,7 @@ public class MainLayout extends AppLayout {
             MenuItem userName = userMenu.addItem("");
             Div div = new Div();
             div.add(avatar);
-            div.add(student.getFirstName() + " " + student.getLastName());
+            div.add(user.getFirstName() + " " + user.getLastName());
             div.add(new Icon("lumo", "dropdown"));
             div.getElement().getStyle().set("display", "flex");
             div.getElement().getStyle().set("align-items", "center");
@@ -155,13 +152,8 @@ public class MainLayout extends AppLayout {
     private MenuItemInfo[] createMenuItems() {
         return new MenuItemInfo[]{ //
 
-                new MenuItemInfo("Avis", "la la-paper-plane", AvisView.class), //
-
-                new MenuItemInfo("Conseil De Classe", "la la-list", ConseilDeClasseView.class), //
-
                 new MenuItemInfo("Mon Compte", "la la-user", MonCompteView.class), //
-
-                new MenuItemInfo("Eleves", "la la-universal-access", ElevesView.class), //
+//
 
         };
     }
